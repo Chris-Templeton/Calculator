@@ -7,24 +7,23 @@ namespace CommandLineCalc
     interface IMathTree
     {
         // Chars must be the same as Types.Keys but ordered by reverse mathematical order of ops
-        public static List<char> Chars = new List<char> { '+', '-', '*', '/', '^', ' ' };
-        
-        // public dictionary of types of IMathTree items
-        public static Dictionary<char, Type> Types = new Dictionary<char, Type>()
+        public static List<(char, Type)> Types = new List<(char, Type)>()
         {
-            {'+', typeof(Addition) },
-            {'-', typeof(Subtraction) },
-            {'*', typeof(Multiplication) },
-            {'/', typeof(Division) },
-            {'^', typeof(Exponent) },
-            {' ', typeof(Base) }
+            ('+', typeof(Addition)),
+            ('-', typeof(Subtraction)),
+            ('*', typeof(Multiplication)),
+            ('/', typeof(Division)),
+            ('^', typeof(Exponent)),
+            (' ', typeof(Base)) 
         };
 
         double Solve();
     }
 
+    // below are all of the classes that implement IMathTree
     class Addition : IMathTree
     {
+        public char op = '+';
         private IMathTree[] Values;
 
         public Addition(params IMathTree[] values)

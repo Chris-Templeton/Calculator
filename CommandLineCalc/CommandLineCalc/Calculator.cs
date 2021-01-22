@@ -89,15 +89,15 @@ namespace CommandLineCalc
          */
         static IMathTree ParseUserInput(string input)
         {
-            foreach (char op in IMathTree.Chars)
+            foreach ((char op, Type type) type in IMathTree.Types) // iterates through all of the operators that IMathTree knows about
             {
-                if (op == ' ') // base case, accounts for no operators left in string
+                if (type.op == ' ') // base case, accounts for no operators left in string
                 {
-                    return (IMathTree)Activator.CreateInstance(IMathTree.Types[op], double.Parse(input));
+                    return (IMathTree)Activator.CreateInstance(type.type, double.Parse(input));
                 }
-                else if (input.Contains(op))
+                else if (input.Contains(type.op))
                 {
-                    return (IMathTree)Activator.CreateInstance(IMathTree.Types[op], SplitTree(input, op));
+                    return (IMathTree)Activator.CreateInstance(type.type, SplitTree(input, type.op));
                 }
             }
 
