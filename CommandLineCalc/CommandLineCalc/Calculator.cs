@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CommandLineCalc
 {
@@ -82,15 +83,38 @@ namespace CommandLineCalc
         /// <returns>Math Tree respecting order of ops.</returns>
         static IMathTree ParseUserInput(string input)
         {
-            foreach ((char op, Type t) type in IMathTree.Types) // iterates through all of the operators (op) that IMathTree knows about
+            // handle parenthesis
+            input = CheckForParenthesis(input);
+
+            // iterates through all of the operators (op) that IMathTree knows about
+            foreach ((char op, Type t) type in IMathTree.Types)
             {
                 if (type.op == ' ') // base case, accounts for no operators left in string
                 {
                     return (IMathTree)Activator.CreateInstance(type.t, double.Parse(input));
                 }
-                else if (input.Contains(type.op))
+
+                List<int> charIndexToSplit = new List<int>();
+                int numParenthesis = 0;
+                for (int i = 0; i < input.Length; i++)
                 {
-                    return (IMathTree)Activator.CreateInstance(type.t, SplitTree(input, type.op));
+                    if (input[i] == '(')
+                    {
+                        numParenthesis++;
+                    }
+                    if (input[i] == ')')
+                    {
+                        numParenthesis--;
+                    }
+
+                    if (numParenthesis == 0 && input[i] == type.op)
+                    {
+                        charIndexToSplit.Add(i);
+                    }
+                }
+                if (charIndexToSplit.Count > 0)
+                {
+                    return (IMathTree)Activator.CreateInstance(type.t, SplitTree(input, charIndexToSplit.ToArray()));
                 }
             }
 
@@ -101,17 +125,69 @@ namespace CommandLineCalc
         /// Helper method to ParseUserInput. Does the work of splitting a string by a given operator.
         /// </summary>
         /// <param name="input">User input.</param>
-        /// <param name="op">Math operator to split input.</param>
+        /// <param name="opIndexes">Indexes of an operator in input to split the string.</param>
         /// <returns>Math Tree array of split Math Trees by given operator.</returns>
-        static IMathTree[] SplitTree(string input, char op)
+        static IMathTree[] SplitTree(string input, params int[] opIndexes)
         {
-            string[] split = input.Split(op);
-            IMathTree[] output = new IMathTree[split.Length];
-            for (int i = 0; i < split.Length; i++)
+            List<IMathTree> output = new List<IMathTree>();
+
+            for (int i = 0; i < opIndexes.Length; i++)
             {
-                output[i] = ParseUserInput(split[i]);
+                if (i == 0)
+                {
+                    output.Add(ParseUserInput(input.Substring(0, opIndexes[i])));
+                }
+                else
+                {
+                    output.Add(ParseUserInput(input.Substring(opIndexes[i - 1] + 1, opIndexes[i] - opIndexes[i - 1] - 1)));
+                }
+
+                if (i == opIndexes.Length - 1)
+                {
+                    output.Add(ParseUserInput(input.Substring(opIndexes[i] + 1)));
+                }
             }
-            return output;
+
+            return output.ToArray();
+        }
+
+        /// <summary>
+        /// Removes outer parenthesis from string if and only if the parenthesis 'match'.
+        /// </summary>
+        /// <param name="input">User input string.</param>
+        /// <returns>String without outer parenthesis (if applicable).</returns>
+        static string CheckForParenthesis(string input)
+        {
+            // need to trim input in case of extra space
+            input = input.Trim();
+
+            // if input starts & ends with parenthesis, check that they match and remove
+            bool parenthesisMatch = true;
+            while (parenthesisMatch && input[0] == '(' && input[input.Length - 1] == ')')
+            {
+                int numParenthesis = 0;
+                for (int i = 0; parenthesisMatch && i < input.Length-1; i++)
+                {
+                    if (input[i] == '(')
+                    {
+                        numParenthesis++;
+                    }
+                    if (input[i] == ')')
+                    {
+                        numParenthesis--;
+                    }
+                    if (numParenthesis == 0)
+                    {
+                        parenthesisMatch = false;
+                    }
+                }
+
+                if (parenthesisMatch)
+                {
+                    input = input.Substring(1, input.Length - 2);
+                }
+            }
+            return input;
         }
     }
 }
