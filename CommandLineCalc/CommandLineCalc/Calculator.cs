@@ -43,12 +43,9 @@ namespace CommandLineCalc
             }
         }
 
-        /* Writes formatted into text to console.
-         * 
-         * No arg(s).
-         * 
-         * No return.
-         */
+        /// <summary>
+        /// Writes header to project.
+        /// </summary>
         static void WriteIntro()
         {
             Console.WriteLine("#################################");
@@ -60,12 +57,10 @@ namespace CommandLineCalc
             Console.WriteLine("           'q' to quit           ");
         }
 
-        /* Prompts user for input
-         * 
-         * No arg(s)
-         * 
-         * Return: user input
-         */
+        /// <summary>
+        /// Reads user input. Adds leading 0 if input starts with '-' to account for negative operator.
+        /// </summary>
+        /// <returns>User input string.</returns>
         static string GetUserInput()
         {
             Console.Write("\nEnter Expression: ");
@@ -80,36 +75,34 @@ namespace CommandLineCalc
             return input;
         }
 
-        /* Parses input of user into something we can solve
-         * 
-         * input: user input
-         * 
-         * Return: IMathTree with values 'branching' to solve
-         *  
-         */
+        /// <summary>
+        /// Parses user input into a IMathTree. Recursively creates tree based on sub-portions of input broken by mathematical operators
+        /// </summary>
+        /// <param name="input">User input.</param>
+        /// <returns>Math Tree respecting order of ops.</returns>
         static IMathTree ParseUserInput(string input)
         {
-            foreach ((char op, Type type) type in IMathTree.Types) // iterates through all of the operators that IMathTree knows about
+            foreach ((char op, Type t) type in IMathTree.Types) // iterates through all of the operators (op) that IMathTree knows about
             {
                 if (type.op == ' ') // base case, accounts for no operators left in string
                 {
-                    return (IMathTree)Activator.CreateInstance(type.type, double.Parse(input));
+                    return (IMathTree)Activator.CreateInstance(type.t, double.Parse(input));
                 }
                 else if (input.Contains(type.op))
                 {
-                    return (IMathTree)Activator.CreateInstance(type.type, SplitTree(input, type.op));
+                    return (IMathTree)Activator.CreateInstance(type.t, SplitTree(input, type.op));
                 }
             }
 
             throw new FormatException(); // this should never be reached
         }
 
-        /* Helper method to ParseUserInput
-         * 
-         * Takes an input string and a operator (char)
-         * 
-         * Returns a IMathTree array split by that operator
-         */
+        /// <summary>
+        /// Helper method to ParseUserInput. Does the work of splitting a string by a given operator.
+        /// </summary>
+        /// <param name="input">User input.</param>
+        /// <param name="op">Math operator to split input.</param>
+        /// <returns>Math Tree array of split Math Trees by given operator.</returns>
         static IMathTree[] SplitTree(string input, char op)
         {
             string[] split = input.Split(op);

@@ -6,7 +6,9 @@ namespace CommandLineCalc
 {
     interface IMathTree
     {
-        // Chars must be the same as Types.Keys but ordered by reverse mathematical order of ops
+        /// <summary>
+        /// List of operators stored as characters and matching IMathTree type. Must be in reverse order of operations order.
+        /// </summary>
         public static List<(char, Type)> Types = new List<(char, Type)>()
         {
             ('+', typeof(Addition)),
@@ -17,13 +19,16 @@ namespace CommandLineCalc
             (' ', typeof(Base)) 
         };
 
-        double Solve();
+        /// <summary>
+        /// Solves the IMathTree to a double value.
+        /// </summary>
+        /// <returns>Double value from solving all Math Tree operations (types).</returns>
+        public double Solve();
     }
 
     // below are all of the classes that implement IMathTree
     class Addition : IMathTree
     {
-        public char op = '+';
         private IMathTree[] Values;
 
         public Addition(params IMathTree[] values)
