@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CommandLineCalc
 {
-    class Calculator
+    public class Calculator
     {
         static void Main(string[] args)
         {
@@ -81,7 +81,7 @@ namespace CommandLineCalc
         /// </summary>
         /// <param name="input">User input.</param>
         /// <returns>Math Tree respecting order of ops.</returns>
-        static IMathTree ParseUserInput(string input)
+        public static IMathTree ParseUserInput(string input)
         {
             // handle parenthesis
             input = CheckForParenthesis(input);

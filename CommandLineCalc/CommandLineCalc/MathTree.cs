@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CommandLineCalc
 {
-    interface IMathTree
+    public interface IMathTree
     {
         /// <summary>
         /// List of operators stored as characters and matching IMathTree type. Must be in reverse order of operations order.
