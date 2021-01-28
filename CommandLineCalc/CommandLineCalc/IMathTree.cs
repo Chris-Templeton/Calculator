@@ -26,8 +26,29 @@ namespace CommandLineCalc
         public double Solve();
     }
 
+    /////////////////////////
     // below are all of the classes that implement IMathTree
-    class Addition : IMathTree
+    /////////////////////////
+
+    /// <summary>
+    /// Most low-level IMathTree class. represents an individual double value
+    /// </summary>
+    public class Base : IMathTree
+    {
+        private double Value;
+
+        public Base(double value)
+        {
+            Value = value;
+        }
+
+        public double Solve()
+        {
+            return Value;
+        }
+    }
+
+    public class Addition : IMathTree
     {
         private IMathTree[] Values;
 
@@ -36,18 +57,27 @@ namespace CommandLineCalc
             Values = values;
         }
 
+        public Addition(params double[] values)
+        {
+            Values = new IMathTree[values.Length];
+            for (int i = 0; i < values.Length; i++)
+            {
+                Values[i] = new Base(values[i]);
+            }
+        }
+
         public double Solve()
         {
-            double result = 0;
+            decimal result = 0;
             foreach (IMathTree value in Values)
             {
-                result += value.Solve();
+                result += (decimal)value.Solve();
             }
-            return result;
+            return (double)result;
         }
     }
 
-    class Subtraction : IMathTree
+    public class Subtraction : IMathTree
     {
         private IMathTree[] Values;
 
@@ -58,16 +88,16 @@ namespace CommandLineCalc
 
         public double Solve()
         {
-            double result = Values[0].Solve();
+            decimal result = (decimal)Values[0].Solve();
             for (int i = 1; i < Values.Length; i++)
             {
-                result -= Values[i].Solve();
+                result -= (decimal)Values[i].Solve();
             }
-            return result;
+            return (double)result;
         }
     }
 
-    class Multiplication : IMathTree
+    public class Multiplication : IMathTree
     {
         private IMathTree[] Values;
 
@@ -78,16 +108,16 @@ namespace CommandLineCalc
 
         public double Solve()
         {
-            double result = Values[0].Solve();
+            decimal result = (decimal)Values[0].Solve();
             for (int i = 1; i < Values.Length; i++)
             {
-                result *= Values[i].Solve();
+                result *= (decimal)Values[i].Solve();
             }
-            return result;
+            return (double)result;
         }
     }
 
-    class Division : IMathTree
+    public class Division : IMathTree
     {
         private IMathTree[] Values;
 
@@ -98,16 +128,16 @@ namespace CommandLineCalc
 
         public double Solve()
         {
-            double result = Values[0].Solve();
+            decimal result = (decimal)Values[0].Solve();
             for (int i = 1; i < Values.Length; i++)
             {
-                result /= Values[i].Solve();
+                result /= (decimal)Values[i].Solve();
             }
-            return result;
+            return (double)result;
         }
     }
 
-    class Exponent : IMathTree
+    public class Exponent : IMathTree
     {
         private IMathTree[] Values;
 
@@ -118,26 +148,12 @@ namespace CommandLineCalc
 
         public double Solve()
         {
-            double result = Values[0].Solve();
+            decimal result = (decimal)Values[0].Solve();
             for (int i = 1; i < Values.Length; i++)
             {
-                result = Math.Pow(result, Values[i].Solve());
+                result = (decimal)Math.Pow((double)result, Values[i].Solve());
             }
-            return result;
-        }
-    }
-
-    class Base : IMathTree
-    {
-        private double Value;
-        public Base(double value)
-        {
-            Value = value;
-        }
-
-        public double Solve()
-        {
-            return Value;
+            return (double)result;
         }
     }
 }

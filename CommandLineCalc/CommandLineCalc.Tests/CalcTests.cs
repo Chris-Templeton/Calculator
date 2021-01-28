@@ -12,7 +12,7 @@ namespace CommandLineCalc.Tests
         [DataRow("3.5 + 6.5 + 2.0 + 1", 13)]
         public void AdditionTests(string input, double solution)
         {
-            double sol = Calculator.ParseUserInput(input).Solve();
+            double sol = Calculator.Calculate(input);
             Assert.AreEqual(solution, sol);
         }
 
@@ -26,7 +26,7 @@ namespace CommandLineCalc.Tests
         [DataRow("10 - 3 + 4", 11)]
         public void SubtractionTests(string input, double solution)
         {
-            double sol = Calculator.ParseUserInput(input).Solve();
+            double sol = Calculator.Calculate(input);
             Assert.AreEqual(solution, sol);
         }
 
@@ -40,7 +40,7 @@ namespace CommandLineCalc.Tests
         [DataRow("4 * 5 - 2 * 3", 14)]
         public void MultiplicationTests(string input, double solution)
         {
-            double sol = Calculator.ParseUserInput(input).Solve();
+            double sol = Calculator.Calculate(input);
             Assert.AreEqual(solution, sol);
         }
 
@@ -51,7 +51,7 @@ namespace CommandLineCalc.Tests
         [DataRow("16 / 2 / 2", 4)]
         public void DivisionTests(string input, double solution)
         {
-            double sol = Calculator.ParseUserInput(input).Solve();
+            double sol = Calculator.Calculate(input);
             Assert.AreEqual(solution, sol);
         }
 
@@ -62,7 +62,7 @@ namespace CommandLineCalc.Tests
         [DataRow("3 ^ 4 ^ 5", 3486784401)]
         public void ExponentTests(string input, double solution)
         {
-            double sol = Calculator.ParseUserInput(input).Solve();
+            double sol = Calculator.Calculate(input);
             Assert.AreEqual(solution, sol);
         }
 
@@ -87,7 +87,7 @@ namespace CommandLineCalc.Tests
         [DataRow("(3 + 2) ^ (1 + 1)", 25)]
         public void ParenthesisTests(string input, double solution)
         {
-            double sol = Calculator.ParseUserInput(input).Solve();
+            double sol = Calculator.Calculate(input);
             Assert.AreEqual(solution, sol);
         }
     }
