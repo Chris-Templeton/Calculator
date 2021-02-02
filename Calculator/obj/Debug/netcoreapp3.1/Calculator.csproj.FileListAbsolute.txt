@@ -11,3 +11,16 @@ C:\Users\Student\workspace\side-projects\Calculator\CommandLineCalc\obj\Debug\ne
 C:\Users\Student\workspace\side-projects\Calculator\CommandLineCalc\obj\Debug\netcoreapp3.1\Calculator.dll
 C:\Users\Student\workspace\side-projects\Calculator\CommandLineCalc\obj\Debug\netcoreapp3.1\Calculator.pdb
 C:\Users\Student\workspace\side-projects\Calculator\CommandLineCalc\obj\Debug\netcoreapp3.1\Calculator.genruntimeconfig.cache
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\bin\Debug\netcoreapp3.1\Calculator.exe
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\bin\Debug\netcoreapp3.1\Calculator.deps.json
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\bin\Debug\netcoreapp3.1\Calculator.runtimeconfig.json
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\bin\Debug\netcoreapp3.1\Calculator.runtimeconfig.dev.json
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\bin\Debug\netcoreapp3.1\Calculator.dll
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\bin\Debug\netcoreapp3.1\Calculator.pdb
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\obj\Debug\netcoreapp3.1\Calculator.csprojAssemblyReference.cache
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\obj\Debug\netcoreapp3.1\Calculator.AssemblyInfoInputs.cache
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\obj\Debug\netcoreapp3.1\Calculator.AssemblyInfo.cs
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\obj\Debug\netcoreapp3.1\Calculator.csproj.CoreCompileInputs.cache
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\obj\Debug\netcoreapp3.1\Calculator.dll
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\obj\Debug\netcoreapp3.1\Calculator.pdb
+C:\Users\Student\workspace\side-projects\Calculator\Calculator\obj\Debug\netcoreapp3.1\Calculator.genruntimeconfig.cache

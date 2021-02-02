@@ -1,0 +1,4 @@
+C:\Users\Student\workspace\dll\Calculator.dll
+C:\Users\Student\workspace\dll\Calculator.deps.json
+C:\Users\Student\workspace\dll\Calculator.runtimeconfig.json
+C:\Users\Student\workspace\dll\Calculator.pdb

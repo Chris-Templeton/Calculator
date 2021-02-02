@@ -12,7 +12,7 @@ namespace CommandLineCalc.Tests
         [DataRow(300000.762)]
         public void BaseTests(double value)
         {
-            IMathTree @base = new Base(value);
+            IMathTree @base = new RootValue(value);
             Assert.AreEqual(value, @base.Solve());
         }
 
@@ -78,7 +78,7 @@ namespace CommandLineCalc.Tests
             List<IMathTree> treeValues = new List<IMathTree>();
             foreach (double value in values)
             {
-                treeValues.Add(new Base(value));
+                treeValues.Add(new RootValue(value));
             }
             return treeValues.ToArray();
         }

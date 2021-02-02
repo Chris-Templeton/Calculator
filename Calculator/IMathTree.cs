@@ -16,14 +16,15 @@ namespace CommandLineCalc
             ('*', typeof(Multiplication)),
             ('/', typeof(Division)),
             ('^', typeof(Exponent)),
-            (' ', typeof(Base)) 
+            (' ', typeof(RootValue))
         };
+
 
         /// <summary>
         /// Solves the IMathTree to a double value.
         /// </summary>
         /// <returns>Double value from solving all Math Tree operations (types).</returns>
-        public double Solve();
+        double Solve();
     }
 
     /////////////////////////
@@ -33,11 +34,11 @@ namespace CommandLineCalc
     /// <summary>
     /// Most low-level IMathTree class. represents an individual double value
     /// </summary>
-    public class Base : IMathTree
+    public class RootValue : IMathTree
     {
         private double Value;
 
-        public Base(double value)
+        public RootValue(double value)
         {
             Value = value;
         }
@@ -62,16 +63,16 @@ namespace CommandLineCalc
             Values = new IMathTree[values.Length];
             for (int i = 0; i < values.Length; i++)
             {
-                Values[i] = new Base(values[i]);
+                Values[i] = new RootValue(values[i]);
             }
         }
 
         public double Solve()
         {
-            decimal result = 0;
-            foreach (IMathTree value in Values)
+            decimal result = (decimal)Values[0].Solve();
+            for (int i = 1; i < Values.Length; i++)
             {
-                result += (decimal)value.Solve();
+                result += (decimal)Values[i].Solve();
             }
             return (double)result;
         }
