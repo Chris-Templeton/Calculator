@@ -1,10 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Calculator.MathTree;
 
 namespace CommandLineCalc.Tests
 {
     [TestClass]
-    public class IMathTreeTests
+    public class MathTreeTests
     {
         [DataTestMethod]
         [DataRow(3)]
@@ -12,8 +13,8 @@ namespace CommandLineCalc.Tests
         [DataRow(300000.762)]
         public void BaseTests(double value)
         {
-            IMathTree @base = new RootValue(value);
-            Assert.AreEqual(value, @base.Solve());
+            MathTree root = new RootValue((decimal)value);
+            Assert.AreEqual((decimal)value, root.Solve());
         }
 
         [DataTestMethod]
@@ -22,8 +23,8 @@ namespace CommandLineCalc.Tests
         [DataRow(5.5, 2.3, 3.2)]
         public void AdditionTests(double solution, params double[] values)
         {
-            IMathTree add = new Addition(ConvertDoubleToTree(values));
-            Assert.AreEqual(solution, add.Solve());
+            MathTree add = new Addition(ConvertDoubleToTree(values));
+            Assert.AreEqual((decimal)solution, add.Solve());
         }
 
         [DataTestMethod]
@@ -32,8 +33,8 @@ namespace CommandLineCalc.Tests
         [DataRow(.2, 7.5, 3.5, 3.8)]
         public void SubtractionTests(double solution, params double[] values)
         {
-            IMathTree sub = new Subtraction(ConvertDoubleToTree(values));
-            Assert.AreEqual(solution, sub.Solve());
+            MathTree sub = new Subtraction(ConvertDoubleToTree(values));
+            Assert.AreEqual((decimal)solution, sub.Solve());
         }
 
         [DataTestMethod]
@@ -42,8 +43,8 @@ namespace CommandLineCalc.Tests
         [DataRow(5, 2.5, 2)]
         public void MultiplactionTests(double solution, params double[] values)
         {
-            IMathTree mult = new Multiplication(ConvertDoubleToTree(values));
-            Assert.AreEqual(solution, mult.Solve());
+            MathTree mult = new Multiplication(ConvertDoubleToTree(values));
+            Assert.AreEqual((decimal)solution, mult.Solve());
         }
 
         [DataTestMethod]
@@ -52,8 +53,8 @@ namespace CommandLineCalc.Tests
         [DataRow(.3, 3, 10)]
         public void DivisionTests(double solution, params double[] values)
         {
-            IMathTree div = new Division(ConvertDoubleToTree(values));
-            Assert.AreEqual(solution, div.Solve());
+            MathTree div = new Division(ConvertDoubleToTree(values));
+            Assert.AreEqual((decimal)solution, div.Solve());
         }
 
         [DataTestMethod]
@@ -62,23 +63,23 @@ namespace CommandLineCalc.Tests
         [DataRow(6.25, 2.5, 2)]
         public void ExponentTests(double solution, params double[] values)
         {
-            IMathTree exp = new Exponent(ConvertDoubleToTree(values));
-            Assert.AreEqual(solution, exp.Solve());
+            MathTree exp = new Exponent(ConvertDoubleToTree(values));
+            Assert.AreEqual((decimal)solution, exp.Solve());
         }
 
 
 
         /// <summary>
-        /// Converts array of double inputs to an array of IMathTree outputs
+        /// Converts array of double inputs to an array of MathTree outputs
         /// </summary>
         /// <param name="values">Double values to convert.</param>
-        /// <returns>IMathTree array of converted values.</returns>
-        private IMathTree[] ConvertDoubleToTree(params double[] values)
+        /// <returns>MathTree array of converted values.</returns>
+        private MathTree[] ConvertDoubleToTree(params double[] values)
         {
-            List<IMathTree> treeValues = new List<IMathTree>();
+            List<MathTree> treeValues = new List<MathTree>();
             foreach (double value in values)
             {
-                treeValues.Add(new RootValue(value));
+                treeValues.Add(new RootValue((decimal)value));
             }
             return treeValues.ToArray();
         }

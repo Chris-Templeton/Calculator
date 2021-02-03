@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Calculator.MathTree;
 
 namespace CommandLineCalc
 {
@@ -27,11 +28,12 @@ namespace CommandLineCalc
                     string result;
                     try
                     {
-                        double sol = Calculate(input);
+                        decimal sol = Calculate(input);
                         result = $"Equals: {sol}";
                     }
-                    catch (FormatException)
+                    catch (Exception e)
                     {
+                        Console.WriteLine(e.ToString());
                         result = "Formatting Error";
                     }
 
@@ -62,8 +64,7 @@ namespace CommandLineCalc
         static string GetUserInput()
         {
             Console.Write("\nEnter Expression: ");
-            string input = Console.ReadLine();
-            return input;
+            return Console.ReadLine();
         }
 
         /// <summary>
@@ -71,9 +72,9 @@ namespace CommandLineCalc
         /// </summary>
         /// <param name="input">User input.</param>
         /// <returns>double result of expression.</returns>
-        public static double Calculate(string input)
+        public static decimal Calculate(string input)
         {
-            IMathTree tree = ParseHelper.Parse(input);
+            MathTree tree = ParseHelper.Parse(input);
             return tree.Solve();
         }
     }

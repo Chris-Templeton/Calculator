@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Calculator.MathTree;
 
 namespace CommandLineCalc
 {
@@ -11,7 +12,7 @@ namespace CommandLineCalc
         /// </summary>
         /// <param name="input">Input string.</param>
         /// <returns>Parsed IMathTree.</returns>
-        public static IMathTree Parse(string input)
+        public static MathTree Parse(string input)
         {
             // clean up parenthesis
             input = CheckForParenthesis(input);
@@ -22,13 +23,12 @@ namespace CommandLineCalc
                 input = $"0 {input}";
             }
 
-            // find highest-level operator to split
-
-            foreach ((char op, Type t) type in IMathTree.Types)
+            // finds a defined operator (defined in MathTree) and splits input based on it
+            foreach ((char op, Type t) type in MathTree.Types)
             {
                 if (type.op == ' ') // base case, accounts for no operators left in string
                 {
-                    return (IMathTree)Activator.CreateInstance(type.t, double.Parse(input));
+                    return (MathTree)Activator.CreateInstance(type.t, decimal.Parse(input));
                 }
 
                 List<int> charIndexToSplit = new List<int>();
@@ -44,16 +44,17 @@ namespace CommandLineCalc
                         numParenthesis--;
                     }
 
-                    if (numParenthesis == 0 && input[i] == type.op)
+                    // only adds the operator to the list to split if it's outside of all parenthesis
+                    if (numParenthesis == 0 && input[i] == type.op) 
                     {
                         charIndexToSplit.Add(i);
                     }
                 }
 
-                // split if char is found
+                // split if operator is found
                 if (charIndexToSplit.Count > 0)
                 {
-                    return (IMathTree)Activator.CreateInstance(type.t, SplitTree(input, charIndexToSplit.ToArray()));
+                    return (MathTree)Activator.CreateInstance(type.t, SplitTree(input, charIndexToSplit.ToArray()));
                 }
             }
 
@@ -105,9 +106,9 @@ namespace CommandLineCalc
         /// <param name="input">User input.</param>
         /// <param name="opIndexes">Indexes of an operator in input to split the string.</param>
         /// <returns>Math Tree array of split Math Trees by given operator.</returns>
-        static IMathTree[] SplitTree(string input, params int[] opIndexes)
+        static MathTree[] SplitTree(string input, params int[] opIndexes)
         {
-            List<IMathTree> output = new List<IMathTree>();
+            List<MathTree> output = new List<MathTree>();
 
             for (int i = 0; i < opIndexes.Length; i++)
             {
