@@ -35,9 +35,6 @@ namespace Calculator.MathTree
         /// Solves the MathTree to a decimal value.
         /// </summary>
         /// <returns>Double value from solving all Math Tree operations (types).</returns>
-        public virtual decimal Solve()
-        {
-            return _value;
-        }
+        public abstract decimal Solve();
     }
 }

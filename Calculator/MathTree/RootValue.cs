@@ -7,5 +7,10 @@ namespace Calculator.MathTree
     public class RootValue : MathTree
     {
         public RootValue(decimal value) : base(value) { }
+
+        public override decimal Solve()
+        {
+            return _value;
+        }
     }
 }
